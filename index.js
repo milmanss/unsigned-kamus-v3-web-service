@@ -29,6 +29,15 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// check if logged in
+const isLoggedIn = (req, res, next) => {
+    if (req.user){
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 // handle static content
 app.use(express.static('./app/public'));
 
@@ -44,17 +53,27 @@ app.get('/google/callback',
     });
 
 // handle dashboard page
-app.get('/dashboard', function(req, res){
+app.get('/dashboard', isLoggedIn, function(req, res){
     res.sendFile(path.join(__dirname + '/app/public/dashboard.html'));
 });
 
 // handle add page
-app.get('/add', function(req, res){
+app.get('/add', isLoggedIn, function(req, res){
     res.sendFile(path.join(__dirname + '/app/public/add-word.html'));
 });
 
+// handle edit page
+app.get('/edit', isLoggedIn, function(req, res){
+    res.sendFile(path.join(__dirname + '/app/public/edit-word.html'));
+});
+
+// handle update page
+app.get('/update/:id', isLoggedIn, function(req, res){
+    res.sendFile(path.join(__dirname + '/app/public/update-word.html'));
+})
+
 // handle logout page
-app.get('/logout', (req, res) => {
+app.get('/logout', isLoggedIn, (req, res) => {
     req.session = null;
     req.logout();
     res.redirect('/');

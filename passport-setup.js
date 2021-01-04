@@ -1,5 +1,5 @@
 const passport = require('passport');
-const uri = "http://localhost:3000";
+const uri = "https://unsigned-kamus-v3.herokuapp.com";
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 

@@ -31,7 +31,6 @@ function submitData(){
 
     // alert and blank the value
     alert("Adding word succeded! Click 'OK' to continue.");
-    document.querySelector('#word').value = "";
-    document.querySelector('#desc').value = "";
+    location.href = `/dashboard`;
 }
 
